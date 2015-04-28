@@ -1,6 +1,5 @@
 package view;
 
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
@@ -9,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
-import javax.swing.JLabel;
 
 public class LogIn extends JFrame {
 
@@ -26,7 +24,7 @@ public class LogIn extends JFrame {
 		
 		this.setResizable(false);
 		this.setTitle(CommonString.TITLE);
-		this.setBounds((dim.width-600)/2, 10, 600, 430);
+		this.setBounds((dim.width-600)/2, 10, 600, 410);
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		
 		ImagePanel mainPanel = new ImagePanel(CommonString.LOGINBG);
@@ -74,11 +72,11 @@ public class LogIn extends JFrame {
 		return result;
 	}
 	
-	public void setLogInButtonListerner(ActionListener listerner){
+	public void setLogInButtonListener(ActionListener listerner){
 		logInButton.addActionListener(listerner);
 	}
 	
-	public void setRegButtonListerner(ActionListener listerner){
+	public void setRegButtonListener(ActionListener listerner){
 		regButton.addActionListener(listerner);
 	}
 }
