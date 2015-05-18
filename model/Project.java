@@ -1,5 +1,9 @@
 package model;
 
+import helper.DatabaseHelper;
+
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.Issue.ISSUE_STATUS;
@@ -62,7 +66,22 @@ public class Project {
 			totalPriorityAllIssue += issue.getPriority();
 		}
 
-		return (int) Math.floor(totalPriorityDoneIssue / totalPriorityAllIssue * 100);
+		return (int) Math.floor(totalPriorityDoneIssue / totalPriorityAllIssue
+				* 100);
+	}
+
+	public void addEmployeeToProject(ArrayList<Employee> employees) {
+		try {
+			Statement statement = DatabaseHelper.getInstance().createStatement();
+			for (Employee employee : employees) {
+				String query = "INSERT INTO Employee_PJ (E_id,PJ_id) VALUES ("
+						+ employee.getId() + "," + this.getId() + ")";
+				statement.executeUpdate(query);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public int getId() {
