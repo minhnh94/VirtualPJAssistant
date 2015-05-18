@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import model.Issue.ISSUE_STATUS;
+
 public class Project {
 
 	public enum PJ_STATUS {
@@ -17,11 +19,11 @@ public class Project {
 	private String estimateDay;
 	private Manager currentManager;
 
-	public Project(int id, String name, String description, String openDay, String estimateDay, Manager currentManager) {
+	public Project(int id, String name, String description, String openDay, String closeDay, String estimateDay, PJ_STATUS status, Manager currentManager) {
 		this.setId(id);
 		this.setName(name);
 		this.setDescription(description);
-		this.setStatus(PJ_STATUS.ONGOING);
+		this.setStatus(status);
 		this.setOpenDay(openDay);
 		this.setEstimateDay(estimateDay);
 		this.setCurrentManager(currentManager);
@@ -46,6 +48,21 @@ public class Project {
 	public boolean isUnreadIssueAvailable() {
 		// TODO: Implement this
 		return true;
+	}
+
+	public int getProjectProgress() {
+		int totalPriorityDoneIssue = 0;
+		int totalPriorityAllIssue = 0;
+
+		for (Issue issue : getTotalIssue()) {
+			if (issue.getStatus() == ISSUE_STATUS.CLOSED) {
+				totalPriorityDoneIssue += issue.getPriority();
+			}
+
+			totalPriorityAllIssue += issue.getPriority();
+		}
+
+		return (int) Math.floor(totalPriorityDoneIssue / totalPriorityAllIssue * 100);
 	}
 
 	public int getId() {
