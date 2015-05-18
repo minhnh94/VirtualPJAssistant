@@ -1,5 +1,8 @@
 package model;
 
+import helper.DatabaseHelper;
+
+import java.sql.Statement;
 import java.util.ArrayList;
 
 public class Employee {
@@ -22,6 +25,10 @@ public class Employee {
 		ArrayList<Project> arrayList = new ArrayList<Project>();
 
 		// TODO: Implement method
+		String query = "SELECT Project.id, Project.name, Project.description, Project.status, Project.openday, Project.closeday, Project.estimated_day, Project.manager_id"
+				+ "FROM Project, Employee_PJ"
+				+ "WHERE Employee_PJ.E_id = "
+				+ this.id + "AND Employee_PJ.PJ_id = Project.id";
 
 		return arrayList;
 	}

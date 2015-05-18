@@ -43,6 +43,11 @@ public class Project {
 		return arrayList;
 	}
 
+	public boolean isUnreadIssueAvailable() {
+		// TODO: Implement this
+		return true;
+	}
+
 	public int getId() {
 		return id;
 	}
