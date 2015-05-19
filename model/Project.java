@@ -84,6 +84,20 @@ public class Project {
 		}
 	}
 
+	public void removeEmployeeFromProject(ArrayList<Employee> employees) {
+		try {
+			Statement statement = DatabaseHelper.getInstance().createStatement();
+			for (Employee employee : employees) {
+				String query = "DELETE FROM Employee_PJ WHERE E_id = "
+						+ employee.getId();
+				statement.executeUpdate(query);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public int getId() {
 		return id;
 	}
