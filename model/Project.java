@@ -49,6 +49,14 @@ public class Project {
 		return arrayList;
 	}
 
+	public ArrayList<Issue> getTotalUnreadIssue() {
+		ArrayList<Issue> arrayList = new ArrayList<Issue>();
+		
+		// TODO: Implement this
+		
+		return arrayList;
+	}
+
 	public boolean isUnreadIssueAvailable() {
 		// TODO: Implement this
 		return true;
@@ -91,6 +99,56 @@ public class Project {
 				String query = "DELETE FROM Employee_PJ WHERE E_id = "
 						+ employee.getId();
 				statement.executeUpdate(query);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void createIssue(Issue newIssue) {
+		try {
+			Statement statement = DatabaseHelper.getInstance().createStatement();
+			int statusInt;
+			if (newIssue.getStatus() == ISSUE_STATUS.NEW) {
+				statusInt = 0;
+			} else if (newIssue.getStatus() == ISSUE_STATUS.CHECKING) {
+				statusInt = 1;
+			} else {
+				statusInt = 2;
+			}
+			String query = "INSERT INTO Issue (PJ_id,name,description,reporter_id,assigned_id,status,priority,is_unread)"
+					+ "VALUES ("
+					+ this.getId()
+					+ ",'"
+					+ newIssue.getName()
+					+ "','"
+					+ newIssue.getDescription()
+					+ "',"
+					+ newIssue.getReporter().getId()
+					+ ","
+					+ newIssue.getAssignee().getId()
+					+ ","
+					+ statusInt
+					+ ","
+					+ newIssue.getPriority() + ",1)";
+			statement.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void editIssue(Issue editedIssue) {
+		try {
+			Statement statement = DatabaseHelper.getInstance().createStatement();
+			int statusInt;
+			if (editedIssue.getStatus() == ISSUE_STATUS.NEW) {
+				statusInt = 0;
+			} else if (editedIssue.getStatus() == ISSUE_STATUS.CHECKING) {
+				statusInt = 1;
+			} else {
+				statusInt = 2;
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
