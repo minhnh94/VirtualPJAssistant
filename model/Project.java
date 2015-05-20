@@ -2,6 +2,7 @@ package model;
 
 import helper.DatabaseHelper;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -23,6 +24,17 @@ public class Project {
 	private String estimateDay;
 	private Manager currentManager;
 
+	public Project() {
+		this.id = 0;
+		this.name = "";
+		this.description = "";
+		this.status = PJ_STATUS.ONGOING;
+		this.openDay = "";
+		this.closeDay = "";
+		this.estimateDay = "";
+		this.currentManager = null;
+	}
+
 	public Project(int id, String name, String description, String openDay, String closeDay, String estimateDay, PJ_STATUS status, Manager currentManager) {
 		this.setId(id);
 		this.setName(name);
@@ -36,7 +48,18 @@ public class Project {
 	public ArrayList<Employee> getCurrentEmployees() {
 		ArrayList<Employee> arrayList = new ArrayList<Employee>();
 
-		// TODO: Implement this
+		try {
+			Statement statement = DatabaseHelper.getInstance().createStatement();
+			String query = "SELECT * FROM Employee_PJ WHERE PJ_id = " + this.id;
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				int id = resultSet.getInt("E_id");
+				Employee employee = DatabaseHelper.getEmployeeFromId(id);
+				arrayList.add(employee);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		return arrayList;
 	}
@@ -44,22 +67,45 @@ public class Project {
 	public ArrayList<Issue> getTotalIssue() {
 		ArrayList<Issue> arrayList = new ArrayList<Issue>();
 
-		// TODO: Implement this
+		try {
+			Statement statement = DatabaseHelper.getInstance().createStatement();
+			String query = "SELECT Issue.id FROM Issue, Project WHERE Issue.PJ_id = "
+					+ this.id;
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				Issue issue = DatabaseHelper.getIssueFromId(id);
+				arrayList.add(issue);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 
 		return arrayList;
 	}
 
 	public ArrayList<Issue> getTotalUnreadIssue() {
 		ArrayList<Issue> arrayList = new ArrayList<Issue>();
-		
-		// TODO: Implement this
-		
+
+		try {
+			Statement statement = DatabaseHelper.getInstance().createStatement();
+			String query = "SELECT Issue.id FROM Issue, Project WHERE Issue.PJ_id = "
+					+ this.id + " AND is_unread = " + 1;
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				Issue issue = DatabaseHelper.getIssueFromId(id);
+				arrayList.add(issue);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return arrayList;
 	}
 
 	public boolean isUnreadIssueAvailable() {
-		// TODO: Implement this
-		return true;
+		return getTotalUnreadIssue().size() != 0;
 	}
 
 	public int getProjectProgress() {
@@ -150,8 +196,17 @@ public class Project {
 			} else {
 				statusInt = 2;
 			}
+			int isUnreadInt = editedIssue.isUnread() ? 1 : 0;
+
+			String query = "UPDATE Issue SET name='" + editedIssue.getName()
+					+ "',description='" + editedIssue.getDescription()
+					+ "',reporter_id=" + editedIssue.getReporter().getId()
+					+ ",assigned_id=" + editedIssue.getAssignee().getId()
+					+ ",status=" + statusInt + ",priority="
+					+ editedIssue.getPriority() + ",is_unread=" + isUnreadInt
+					+ " WHERE id=" + editedIssue.getId();
+			statement.executeUpdate(query);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

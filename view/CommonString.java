@@ -25,7 +25,7 @@ public class CommonString {
 	public static final String REGOKBTTH = "img/regokh.png";
 	
 	public static final String ACCTYPE0 = "Project Manager";
-	public static final String ACCTYPE1 = "Deverloper";
+	public static final String ACCTYPE1 = "Developer";
 	public static final String ACCTYPE2 = "Tester";
 	
 	public static final String MAINBG = "img/bg3.jpg";
@@ -49,4 +49,30 @@ public class CommonString {
 	
 	public static final String NULLBG = "img/nullbg.png";
 	
+	public static final String ISSTITLE = "B\u1EA3ng th\u00F4ng b\u00E1o";
+	public static final String ISSBG = "img/issbg.png";
+	public static final String ADDISS = "img/addiss.png";
+	public static final String ADDISSH = "img/addissh.png";
+	public static final String DETAIL = "img/detail.png";
+	public static final String DETAILH = "img/detailh.png";
+	public static final String TONEW = "img/tonew.png";
+	public static final String TONEWH = "img/tonewh.png";
+	public static final String ALLISS = "img/alliss.png";
+	public static final String ALLISSH = "img/allissh.png";
+	
+	public static final String ISSMESS = "Th\u00F4ng \u0111i\u1EC7p";
+	public static final String SAVEMESS = "img/savemess.png";
+	public static final String SAVEMESSH = "img/savemessh.png";
+	public static final String RELOAD = "img/reload.png";
+	public static final String RELOADH = "img/reloadh.png";
+	
+	public static final String SENDTOTEST = "img/sendtotest.png";
+	public static final String SENDTOTESTH = "img/sendtotesth.png";
+	public static final String SENDTODEV = "img/sendtodev.png";
+	public static final String SENDTODEVH = "img/sendtodevh.png";
+	
+	public static final String CREATENEWISSUE = "T\u1EA1o nhi\u1EC7m v\u1EE5 m\u1EDBi";
+	public static final String NOIDUNG = "N\u1ED9i dung";
+	public static final String CREATEISS = "img/createiss.png";
+	public static final String CREATEISSH = "img/createissh.png";
 }

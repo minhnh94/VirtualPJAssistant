@@ -4,11 +4,12 @@ import helper.DatabaseHelper;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-
 import model.Project.PJ_STATUS;
 
 public class Manager extends Employee {
+	public Manager() {
+		super();
+	}
 
 	public Manager(int id, String name, String password, String tel, String email) {
 		super(id, name, password, tel, email);
