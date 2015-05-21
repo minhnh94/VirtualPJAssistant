@@ -9,6 +9,8 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -28,7 +30,7 @@ import model.Project.PJ_STATUS;
 public class MainView extends JFrame {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private JLabel notiLabel;
 	private ImageButton pro5Button;
 	private JScrollPane projectPane;
@@ -36,63 +38,64 @@ public class MainView extends JFrame {
 	private DefaultListModel<JPanel> projectListModel;
 	private PanelListCellRenderer projectRenderer;
 	private ImageButton addButton;
-	
+
 	private boolean isManager;
-	
+
 	public MainView(Employee employee) {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
-		
+
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(CommonString.MAINICON)));
 		this.setResizable(false);
 		this.setTitle(CommonString.TITLE);
-		this.setBounds((dim.width-600)/2, 10, 600, 410);
+		this.setBounds((dim.width - 600) / 2, 10, 600, 410);
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		
+
 		ImagePanel mainPanel = new ImagePanel(CommonString.MAINBG);
 		mainPanel.setLayout(new BorderLayout());
-		
+
 		this.setContentPane(mainPanel);
-		
+
 		isManager = (employee instanceof Manager);
-		
+
 		JPanel notiPanel = new JPanel();
 		notiPanel.setOpaque(false);
 		notiPanel.setLayout(new BorderLayout());
 		mainPanel.add(notiPanel, BorderLayout.NORTH);
-		
+
 		String hello1 = CommonString.XINCHAO + ", " + employee.getName() + "!";
-		String hello2 = CommonString.BANCO + " " + employee.getNewAssignedIssueAsNotification().size()
-				+ " " + CommonString.THONGBAOMOI;
-		
+		String hello2 = CommonString.BANCO + " "
+				+ employee.getNewAssignedIssueAsNotification().size() + " "
+				+ CommonString.THONGBAOMOI;
+
 		JPanel leftNotiPanel = new JPanel(new FlowLayout());
 		leftNotiPanel.setPreferredSize(new Dimension(370, 100));
 		leftNotiPanel.setOpaque(false);
 		notiPanel.add(leftNotiPanel, BorderLayout.CENTER);
-		
+
 		JLabel nameLabel = new JLabel(hello1, JLabel.CENTER);
 		nameLabel.setFont(Theme.SMALLER_FONT);
 		nameLabel.setOpaque(false);
 		nameLabel.setForeground(Theme.getColor(0));
 		leftNotiPanel.add(nameLabel);
-		
+
 		notiLabel = new JLabel(hello2, JLabel.CENTER);
 		notiLabel.setFont(Theme.SMALLER_FONT);
 		notiLabel.setOpaque(false);
 		notiLabel.setForeground(Theme.getColor(0));
 		leftNotiPanel.add(notiLabel);
-		
+
 		ImageLabel notiPic = new ImageLabel(CommonString.NOTIPIC, 100, 100);
 		notiPanel.add(notiPic, BorderLayout.EAST);
-		
+
 		pro5Button = new ImageButton(CommonString.PRO5, CommonString.PRO5);
 		pro5Button.setPreferredSize(new Dimension(100, 100));
 		notiPanel.add(pro5Button, BorderLayout.WEST);
-		
+
 		projectPane = new JScrollPane();
 		projectPane.setOpaque(false);
 		projectPane.setBounds(10, 330, 750, 170);
 		mainPanel.add(projectPane, BorderLayout.CENTER);
-		
+
 		projectList = new JList<JPanel>();
 		projectList.setOpaque(false);
 		projectListModel = new DefaultListModel<JPanel>();
@@ -102,58 +105,65 @@ public class MainView extends JFrame {
 		projectList.setVisibleRowCount(2);
 		projectPane.setViewportView(projectList);
 		projectPane.getViewport().setOpaque(false);
-		
+
 		addButton = new ImageButton(CommonString.ADDBTT, CommonString.ADDBTTH);
 		addButton.setOpaque(false);
-		
+
+		this.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowActivated(WindowEvent e) {
+				setListOfProject(employee.getOngoingProjects(), employee.getFinishedProjects());
+			}
+		});
+
 		setListOfProject(employee.getOngoingProjects(), employee.getFinishedProjects());
 
 	}
-	
-	private JProgressBar getProgressBar(int value){
+
+	private JProgressBar getProgressBar(int value) {
 		JProgressBar progressBar = new JProgressBar();
-		int tempValue = (int) Math.floor(value/10);
+		int tempValue = (int) Math.floor(value / 10);
 		switch (tempValue) {
-			case 0:
-				progressBar.setForeground(Theme.getProbarColor(0));
-				break;
-			case 1:
-				progressBar.setForeground(Theme.getProbarColor(1));
-				break;
-			case 2:
-				progressBar.setForeground(Theme.getProbarColor(2));
-				break;
-			case 3:
-				progressBar.setForeground(Theme.getProbarColor(3));
-				break;
-			case 4:
-				progressBar.setForeground(Theme.getProbarColor(4));
-				break;
-			case 5:
-				progressBar.setForeground(Theme.getProbarColor(5));
-				break;
-			case 6:
-				progressBar.setForeground(Theme.getProbarColor(6));
-				break;
-			case 7:
-				progressBar.setForeground(Theme.getProbarColor(7));
-				break;
-			case 8:
-				progressBar.setForeground(Theme.getProbarColor(8));
-				break;
-			case 9:
-				progressBar.setForeground(Theme.getProbarColor(9));
-				break;
-			default:
-				progressBar.setForeground(Theme.getProbarColor(9));
-				break;
+		case 0:
+			progressBar.setForeground(Theme.getProbarColor(0));
+			break;
+		case 1:
+			progressBar.setForeground(Theme.getProbarColor(1));
+			break;
+		case 2:
+			progressBar.setForeground(Theme.getProbarColor(2));
+			break;
+		case 3:
+			progressBar.setForeground(Theme.getProbarColor(3));
+			break;
+		case 4:
+			progressBar.setForeground(Theme.getProbarColor(4));
+			break;
+		case 5:
+			progressBar.setForeground(Theme.getProbarColor(5));
+			break;
+		case 6:
+			progressBar.setForeground(Theme.getProbarColor(6));
+			break;
+		case 7:
+			progressBar.setForeground(Theme.getProbarColor(7));
+			break;
+		case 8:
+			progressBar.setForeground(Theme.getProbarColor(8));
+			break;
+		case 9:
+			progressBar.setForeground(Theme.getProbarColor(9));
+			break;
+		default:
+			progressBar.setForeground(Theme.getProbarColor(9));
+			break;
 		}
 		progressBar.setValue(value);
 		progressBar.setStringPainted(true);
 		progressBar.setString(value + "%");
 		return progressBar;
 	}
-	
+
 	private JPanel getProjectPanel(Project project) {
 		JPanel projectPanel = new JPanel();
 		projectPanel.setPreferredSize(new Dimension(275, 100));
@@ -161,61 +171,62 @@ public class MainView extends JFrame {
 		projectPanel.setLayout(null);
 
 		int projectStatus = 2;
-		if(project.getStatus()==PJ_STATUS.ONGOING){
-			if(project.isUnreadIssueAvailable()){
-				projectStatus=1;
+		if (project.getStatus() == PJ_STATUS.ONGOING) {
+			if (project.isUnreadIssueAvailable()) {
+				projectStatus = 1;
 			} else {
-				projectStatus=0;
+				projectStatus = 0;
 			}
 		}
-		
-		if(projectStatus==1){
-			JLabel unreadLabel = new JLabel(project.getTotalUnreadIssue() + "", JLabel.CENTER);
+
+		if (projectStatus == 1) {
+			JLabel unreadLabel = new JLabel(project.getTotalUnreadIssue().size()
+					+ "", JLabel.CENTER);
 			unreadLabel.setForeground(Theme.getColor(0));
 			unreadLabel.setBounds(10, 10, 35, 35);
 			unreadLabel.setOpaque(false);
 			unreadLabel.setFont(Theme.SMALLER_FONT);
 			projectPanel.add(unreadLabel);
-			
+
 			ImageLabel unreadImage = new ImageLabel(CommonString.UNREADBADGE, 35, 35);
 			unreadImage.setBounds(10, 10, 35, 35);
 			unreadImage.setOpaque(false);
 			projectPanel.add(unreadImage);
 		}
-		
+
 		ImageLabel folderLabel = new ImageLabel(CommonString.FOLDERICON2[projectStatus], 100, 81);
 		folderLabel.setBounds(20, 10, 100, 81);
 		projectPanel.add(folderLabel);
-		
+
 		JLabel progressLabel = new JLabel(project.getName(), JLabel.CENTER);
 		progressLabel.setBounds(120, 15, 150, 30);
 		progressLabel.setOpaque(false);
 		progressLabel.setFont(Theme.SMALLER_FONT);
 		progressLabel.setForeground(Theme.getColor(0));
 		projectPanel.add(progressLabel);
-		
+
 		int value = project.getProjectProgress();
-		
+
 		JProgressBar progressBar = getProgressBar(value);
 		progressBar.setBounds(120, 50, 150, 20);
 		projectPanel.add(progressBar);
-		
+
 		return projectPanel;
 	}
-	
+
 	public void setListOfProject(List<Project> projects1, List<Project> projects2) {
 		projectListModel.clear();
 		projectRenderer = new PanelListCellRenderer();
 		projectList.setCellRenderer(projectRenderer);
-		
-		if(isManager){
+
+		if (isManager) {
 			addButton.setBounds(0, 10, 270, 100);
 			JPanel addPanel = new JPanel();
 			addPanel.setOpaque(false);
 			addPanel.add(addButton);
 			projectListModel.addElement(addPanel);
 		}
-		
+
 		for (Project project : projects1) {
 			projectListModel.addElement(getProjectPanel(project));
 		}
@@ -223,7 +234,7 @@ public class MainView extends JFrame {
 			projectListModel.addElement(getProjectPanel(project));
 		}
 	}
-	
+
 	class PanelListCellRenderer implements ListCellRenderer<JPanel> {
 
 		@Override
@@ -241,20 +252,20 @@ public class MainView extends JFrame {
 			}
 		}
 	}
-	
-	public void setPro5ButtonActionListerner(ActionListener listener){
+
+	public void setPro5ButtonActionListerner(ActionListener listener) {
 		pro5Button.addActionListener(listener);
 	}
-	
-	public void setNotiLabelMouseAdapter(MouseListener listener){
+
+	public void setNotiLabelMouseAdapter(MouseListener listener) {
 		notiLabel.addMouseListener(listener);
 	}
-	
-	public int getSelectedProjectIndex(){
+
+	public int getSelectedProjectIndex() {
 		return projectList.getSelectedIndex();
 	}
-	
-	public void addProjectListMouseListener(MouseListener listener){
+
+	public void addProjectListMouseListener(MouseListener listener) {
 		projectList.addMouseListener(listener);
 	}
 }

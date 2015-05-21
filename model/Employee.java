@@ -109,8 +109,8 @@ public class Employee {
 
 		try {
 			Statement statement = DatabaseHelper.getInstance().createStatement();
-			String query = "SELECT `Issue`.`id`"
-					+ "FROM `Issue`, `Employee` WHERE `Issue`.`assigned_id` = "
+			String query = "SELECT Issue.id "
+					+ "FROM Issue, Employee WHERE Issue.assigned_id = Employee.id AND Issue.assigned_id = "
 					+ this.getId() + " AND `Issue`.`is_unread` = 1";
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {

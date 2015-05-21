@@ -1,5 +1,7 @@
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -43,6 +45,14 @@ public class MainViewController {
 						}
 					}
 				}
+			}
+		});
+		UserProfileController userProfileCtrl = new UserProfileController(employee, true);
+		mainView.setPro5ButtonActionListerner(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				userProfileCtrl.showProfileView();
 			}
 		});
 		mainView.setVisible(true);

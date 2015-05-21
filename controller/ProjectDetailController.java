@@ -33,103 +33,107 @@ public class ProjectDetailController {
 		projectDetailView = new ProjectDetail(currentProject, currentEmployee instanceof Manager);
 
 		// Setup the detail view
-		projectDetailView.addCloseButtonActionListener(new ActionListener() {
+		if (currentEmployee instanceof Manager) {
+			projectDetailView.addCloseButtonActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (currentProject.getStatus() == PJ_STATUS.ONGOING) {
-					currentProject.setStatus(PJ_STATUS.FINISHED);
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (currentProject.getStatus() == PJ_STATUS.ONGOING) {
+						currentProject.setStatus(PJ_STATUS.FINISHED);
 
-					// Get current datetime
-					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-					String closeDay = dateFormat.format(new Date());
-					currentProject.setCloseDay(closeDay);
+						// Get current datetime
+						DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+						String closeDay = dateFormat.format(new Date());
+						currentProject.setCloseDay(closeDay);
 
-					DatabaseHelper.updateProjectInfo(currentProject);
-					JOptionPane.showMessageDialog(null, "Project closed!");
-					delegate.setListOfProject(currentEmployee.getOngoingProjects(), currentEmployee.getFinishedProjects());
-					projectDetailView.dispose();
-				} else {
-					currentProject.setStatus(PJ_STATUS.ONGOING);
+						DatabaseHelper.updateProjectInfo(currentProject);
+						JOptionPane.showMessageDialog(null, "Project closed!");
+						delegate.setListOfProject(currentEmployee.getOngoingProjects(), currentEmployee.getFinishedProjects());
+						projectDetailView.dispose();
+					} else {
+						currentProject.setStatus(PJ_STATUS.ONGOING);
 
-					currentProject.setCloseDay("");
+						currentProject.setCloseDay("");
 
-					DatabaseHelper.updateProjectInfo(currentProject);
-					JOptionPane.showMessageDialog(null, "Project reopened!");
-					delegate.setListOfProject(currentEmployee.getOngoingProjects(), currentEmployee.getFinishedProjects());
-					projectDetailView.dispose();
-				}
-			}
-		});
-
-		// Setup add dev button action
-		projectDetailView.addAddDevButtonActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (currentProject.getStatus() == PJ_STATUS.FINISHED) {
-					JOptionPane.showMessageDialog(null, "This project was already finished. Reopen it to continue developing.");
-					return;
-				}
-
-				new AddEmployeeController(true, currentProject, projectDetailView);
-			}
-		});
-
-		// Setup add test button action
-		projectDetailView.addAddTestButtonActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (currentProject.getStatus() == PJ_STATUS.FINISHED) {
-					JOptionPane.showMessageDialog(null, "This project was already finished. Reopen it to continue developing.");
-					return;
-				}
-
-				new AddEmployeeController(false, currentProject, projectDetailView);
-			}
-		});
-
-		// Delete test and dev by double clicking
-		projectDetailView.addDevListMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					Developer selectedDev = (Developer) currentProject.getCurrentDevs().get(projectDetailView.getSelectedDevList());
-					int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove developer \""
-							+ selectedDev.getName() + "\" from project?");
-					if (selectedOption == 0) {
-						ArrayList<Employee> arrayList = new ArrayList<Employee>();
-						arrayList.add(selectedDev);
-						currentProject.removeEmployeeFromProject(arrayList);
-						projectDetailView.setListOfDev(currentProject.getCurrentDevs());
+						DatabaseHelper.updateProjectInfo(currentProject);
+						JOptionPane.showMessageDialog(null, "Project reopened!");
+						delegate.setListOfProject(currentEmployee.getOngoingProjects(), currentEmployee.getFinishedProjects());
+						projectDetailView.dispose();
 					}
 				}
-			}
-		});
-		projectDetailView.addTestListMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 2) {
-					Tester selectedTester = (Tester) currentProject.getCurrentTesters().get(projectDetailView.getSelectedTesterList());
-					int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove tester \""
-							+ selectedTester.getName() + "\" from project?");
-					if (selectedOption == 0) {
-						ArrayList<Employee> arrayList = new ArrayList<Employee>();
-						arrayList.add(selectedTester);
-						currentProject.removeEmployeeFromProject(arrayList);
-						projectDetailView.setListOfTest(currentProject.getCurrentTesters());
+			});
+
+			// Setup add dev button action
+			projectDetailView.addAddDevButtonActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (currentProject.getStatus() == PJ_STATUS.FINISHED) {
+						JOptionPane.showMessageDialog(null, "This project was already finished. Reopen it to continue developing.");
+						return;
+					}
+
+					new AddEmployeeController(true, currentProject, projectDetailView);
+				}
+			});
+
+			// Setup add test button action
+			projectDetailView.addAddTestButtonActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					if (currentProject.getStatus() == PJ_STATUS.FINISHED) {
+						JOptionPane.showMessageDialog(null, "This project was already finished. Reopen it to continue developing.");
+						return;
+					}
+
+					new AddEmployeeController(false, currentProject, projectDetailView);
+				}
+			});
+
+			// Delete test and dev by double clicking
+			projectDetailView.addDevListMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (e.getClickCount() == 2
+							&& currentProject.getStatus() == PJ_STATUS.ONGOING) {
+						Developer selectedDev = (Developer) currentProject.getCurrentDevs().get(projectDetailView.getSelectedDevList());
+						int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove developer \""
+								+ selectedDev.getName() + "\" from project?");
+						if (selectedOption == 0) {
+							ArrayList<Employee> arrayList = new ArrayList<Employee>();
+							arrayList.add(selectedDev);
+							currentProject.removeEmployeeFromProject(arrayList);
+							projectDetailView.setListOfDev(currentProject.getCurrentDevs());
+						}
 					}
 				}
-			}
-		});
+			});
+			projectDetailView.addTestListMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					if (e.getClickCount() == 2
+							&& currentProject.getStatus() == PJ_STATUS.ONGOING) {
+						Tester selectedTester = (Tester) currentProject.getCurrentTesters().get(projectDetailView.getSelectedTesterList());
+						int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove tester \""
+								+ selectedTester.getName() + "\" from project?");
+						if (selectedOption == 0) {
+							ArrayList<Employee> arrayList = new ArrayList<Employee>();
+							arrayList.add(selectedTester);
+							currentProject.removeEmployeeFromProject(arrayList);
+							projectDetailView.setListOfTest(currentProject.getCurrentTesters());
+						}
+					}
+				}
+			});
+		}
 
 		// Add view issue action
 		projectDetailView.addViewButtonActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				new ListIssueController(currentProject, currentEmployee);
 			}
 		});
 

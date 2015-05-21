@@ -116,7 +116,7 @@ public class EditUserProfile extends JDialog {
 		gbc_reTypePassword.gridy = 2;
 		centerPanel.add(reTypePassword, gbc_reTypePassword);
 		
-		JLabel emailLabel = new JLabel(CommonString.USERNAME + ": ", JLabel.RIGHT);
+		JLabel emailLabel = new JLabel("Email: ", JLabel.RIGHT);
 		emailLabel.setForeground(Theme.getColor(1));
 		emailLabel.setFont(Theme.SMALLER_FONT);
 		emailLabel.setPreferredSize(new Dimension(150,30));
@@ -138,7 +138,7 @@ public class EditUserProfile extends JDialog {
 		gbc_email.gridy = 3;
 		centerPanel.add(email, gbc_email);
 		
-		JLabel telLabel = new JLabel(CommonString.USERNAME + ": ", JLabel.RIGHT);
+		JLabel telLabel = new JLabel(CommonString.TEL + ": ", JLabel.RIGHT);
 		telLabel.setForeground(Theme.getColor(1));
 		telLabel.setFont(Theme.SMALLER_FONT);
 		telLabel.setPreferredSize(new Dimension(150,30));
