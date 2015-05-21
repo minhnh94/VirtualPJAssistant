@@ -105,6 +105,20 @@ public class ListIssueController {
 					}
 				});
 
+				// Close issue button
+				if (!(currentEmployee instanceof Developer)) {
+					issueDetail.addCloseButtonActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							currentIssue.setStatus(ISSUE_STATUS.CLOSED);
+							currentProject.editIssue(currentIssue);
+							JOptionPane.showMessageDialog(null, "Issue solved, now being closed.");
+							issueDetail.dispose();
+						}
+					});
+				}
+
 				issueDetail.setVisible(true);
 
 			}

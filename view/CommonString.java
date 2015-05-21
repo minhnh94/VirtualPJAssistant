@@ -112,4 +112,10 @@ public class CommonString {
 	public static final String PASSWORD = "Password";
 	public static final String REPASSWORD = "G\u00F5 l\u1EA1i Password";
 	
+	public static final String CLOSEISS = "img/closeiss.png";
+	public static final String CLOSEISSH = "img/closeissh.png";
+	
+	public static final String HIS = "img/his.png";
+	public static final String HISH = "img/hish.png";
+	
 }

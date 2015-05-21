@@ -29,7 +29,7 @@ public class ListIssue extends JDialog {
 	private PatternPanel issPanel;
 	private ImageButton addButton;
 	private ImageButton viewButton;
-	private ImageButton toNewButton;
+	private ImageButton historyButton;
 	private MainTableModel tbmodel;
 
 	public ListIssue(Employee employee, boolean readingNew) {
@@ -40,14 +40,14 @@ public class ListIssue extends JDialog {
 			tbmodel.setIssues(employee.getAssignedIssue());
 		}
 		tbmodel.fireTableDataChanged();
-		createButtons(employee instanceof Developer, !readingNew);
+		createButtons(employee instanceof Developer);
 	}
 
 	public ListIssue(Employee employee, Project project) {
 		creatTable();
 		tbmodel.setIssues(project.getTotalIssue());
 		tbmodel.fireTableDataChanged();
-		createButtons(employee instanceof Developer, true);
+		createButtons(employee instanceof Developer);
 	}
 
 	public void refreshTable(Employee employee, boolean readingNew) {
@@ -94,7 +94,7 @@ public class ListIssue extends JDialog {
 		table.setModel(tbmodel);
 	}
 
-	private void createButtons(boolean isDev, boolean toNew) {
+	private void createButtons(boolean isDev) {
 		JPanel buttonPanel = new JPanel(new FlowLayout());
 		buttonPanel.setOpaque(false);
 		issPanel.add(buttonPanel, BorderLayout.SOUTH);
@@ -108,16 +108,10 @@ public class ListIssue extends JDialog {
 		viewButton = new ImageButton(CommonString.DETAIL, CommonString.DETAILH);
 		viewButton.setPreferredSize(new Dimension(200, 50));
 		buttonPanel.add(viewButton);
-
-		if (toNew) {
-			toNewButton = new ImageButton(CommonString.TONEW, CommonString.TONEWH);
-			toNewButton.setPreferredSize(new Dimension(200, 50));
-			buttonPanel.add(toNewButton);
-		} else {
-			toNewButton = new ImageButton(CommonString.ALLISS, CommonString.ALLISSH);
-			toNewButton.setPreferredSize(new Dimension(200, 50));
-			buttonPanel.add(toNewButton);
-		}
+		
+		historyButton = new ImageButton(CommonString.HIS, CommonString.HISH);
+		historyButton.setPreferredSize(new Dimension(200, 50));
+		buttonPanel.add(historyButton);
 
 	}
 
@@ -217,8 +211,8 @@ public class ListIssue extends JDialog {
 		viewButton.addActionListener(listener);
 	}
 
-	public void addToNewButtonActionListerner(ActionListener listener) {
-		toNewButton.addActionListener(listener);
+	public void addHistoryButtonActionListerner(ActionListener listener) {
+		historyButton.addActionListener(listener);
 	}
 
 }

@@ -145,10 +145,25 @@ public class MainViewController {
 								Project currentProject = DatabaseHelper.getProjectFromPjId(currentIssue.getIncludedProject().getId());
 								currentProject.editIssue(currentIssue);
 								JOptionPane.showMessageDialog(null, "Sent successfully");
-								listIssue.refreshTable(currentProject);
+								listIssue.refreshTable(currentEmployee, true);
 								issueDetail.dispose();
 							}
 						});
+
+						// Close issue button
+						if (!(currentEmployee instanceof Developer)) {
+							issueDetail.addCloseButtonActionListener(new ActionListener() {
+
+								@Override
+								public void actionPerformed(ActionEvent e) {
+									currentIssue.setStatus(ISSUE_STATUS.CLOSED);
+									Project currentProject = DatabaseHelper.getProjectFromPjId(currentIssue.getIncludedProject().getId());
+									currentProject.editIssue(currentIssue);
+									JOptionPane.showMessageDialog(null, "Issue solved, now being closed.");
+									issueDetail.dispose();
+								}
+							});
+						}
 
 						issueDetail.setVisible(true);
 					}

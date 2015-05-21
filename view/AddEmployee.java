@@ -48,9 +48,9 @@ public class AddEmployee extends JDialog {
 		
 		String title;
 		if(isAddingDev){
-			title = CommonString.ADD + " " + ObjectPropertyString.DEV;
+			title = CommonString.ADD + " " + ObjectPropertyString.DEV2;
 		} else {
-			title = CommonString.ADD + " " + ObjectPropertyString.TEST;
+			title = CommonString.ADD + " " + ObjectPropertyString.TEST2;
 		}
 		
 		JLabel pjName = new JLabel(title, JLabel.CENTER);

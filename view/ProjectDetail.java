@@ -202,7 +202,7 @@ public class ProjectDetail extends JDialog {
 		devScrollPane.getViewport().setOpaque(false);
 		centerCenterPanel.add(devScrollPane, BorderLayout.CENTER);
 
-		JLabel devListLabel = new JLabel(ObjectPropertyString.DEV, JLabel.CENTER);
+		JLabel devListLabel = new JLabel(ObjectPropertyString.DEV2, JLabel.CENTER);
 		devListLabel.setForeground(Theme.getColor(1));
 		devListLabel.setFont(Theme.SMALLER_FONT);
 		devListLabel.setPreferredSize(new Dimension(300, 30));
@@ -228,7 +228,7 @@ public class ProjectDetail extends JDialog {
 		testScrollPane.getViewport().setOpaque(false);
 		rightCenterPanel.add(testScrollPane, BorderLayout.CENTER);
 
-		JLabel testListLabel = new JLabel(ObjectPropertyString.TEST, JLabel.CENTER);
+		JLabel testListLabel = new JLabel(ObjectPropertyString.TEST2, JLabel.CENTER);
 		testListLabel.setForeground(Theme.getColor(1));
 		testListLabel.setFont(Theme.SMALLER_FONT);
 		testListLabel.setPreferredSize(new Dimension(300, 30));
