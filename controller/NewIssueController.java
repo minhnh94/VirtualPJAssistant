@@ -1,7 +1,14 @@
 package controller;
 
+import helper.DatabaseHelper;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JOptionPane;
 
@@ -38,6 +45,14 @@ public class NewIssueController {
 
 				Issue issueCreated = new Issue(0, currentProject, name, desc, reporter, assignee, ISSUE_STATUS.NEW, priority, true);
 				currentProject.createIssue(issueCreated);
+
+				// Make content to create history
+				DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+				String history = "[" + df.format(new Date()) + "]\n";
+				history += "Reporter: " + reporter.getName() + "\n";
+				history += "Assignee: " + assignee.getName() + "\n";
+				history += "Content: " + desc + "\n\n";
+				DatabaseHelper.writeToIssueHistoryFile(name, history);
 
 				JOptionPane.showMessageDialog(null, "Issue created successfully.");
 				delegate.refreshTable(currentProject);

@@ -1,5 +1,7 @@
 package helper;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -294,6 +296,16 @@ public class DatabaseHelper {
 			statement.executeUpdate(query);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void writeToIssueHistoryFile(String filename, String content) {
+		try {
+			FileWriter fw = new FileWriter(filename + ".txt", true);
+			fw.write(content);
+			fw.close();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
