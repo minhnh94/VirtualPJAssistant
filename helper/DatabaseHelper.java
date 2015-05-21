@@ -145,8 +145,11 @@ public class DatabaseHelper {
 			ISSUE_STATUS status;
 			if (resultSet.getInt("status") == 0) {
 				status = ISSUE_STATUS.NEW;
-			} else
+			} else if (resultSet.getInt("status") == 1) {
 				status = ISSUE_STATUS.CHECKING;
+			} else {
+				status = ISSUE_STATUS.CLOSED;
+			}
 
 			int priority = resultSet.getInt("priority");
 			boolean isUnread = resultSet.getInt("is_unread") == 1 ? true : false;

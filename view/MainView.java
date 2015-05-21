@@ -175,7 +175,7 @@ public class MainView extends JFrame {
 
 		int projectStatus = 2;
 		if (project.getStatus() == PJ_STATUS.ONGOING) {
-			if (project.isUnreadIssueAvailable()) {
+			if (project.isUnfinishedIssueAvailable()) {
 				projectStatus = 1;
 			} else {
 				projectStatus = 0;
@@ -183,7 +183,7 @@ public class MainView extends JFrame {
 		}
 
 		if (projectStatus == 1) {
-			JLabel unreadLabel = new JLabel(project.getTotalUnreadIssue().size()
+			JLabel unreadLabel = new JLabel(project.getUnfinishedIssue().size()
 					+ "", JLabel.CENTER);
 			unreadLabel.setForeground(Theme.getColor(0));
 			unreadLabel.setBounds(10, 10, 35, 35);

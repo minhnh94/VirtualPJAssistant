@@ -130,7 +130,7 @@ public class Project {
 
 		try {
 			Statement statement = DatabaseHelper.getInstance().createStatement();
-			String query = "SELECT Issue.id FROM Issue, Project WHERE Issue.PJ_id = "
+			String query = "SELECT Issue.id FROM Issue, Project WHERE Project.id = "
 					+ this.id + " AND Issue.PJ_id = Project.id";
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
@@ -165,8 +165,29 @@ public class Project {
 		return arrayList;
 	}
 
-	public boolean isUnreadIssueAvailable() {
-		return getTotalUnreadIssue().size() != 0;
+	public ArrayList<Issue> getUnfinishedIssue() {
+		ArrayList<Issue> arrayList = new ArrayList<Issue>();
+
+		try {
+			Statement statement = DatabaseHelper.getInstance().createStatement();
+			String query = "SELECT Issue.id FROM Issue, Project WHERE Issue.PJ_id = Project.id AND Issue.PJ_id = "
+					+ this.id + " AND Issue.status != 2";
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				Issue issue = DatabaseHelper.getIssueFromId(id);
+				arrayList.add(issue);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return arrayList;
+	}
+
+	public boolean isUnfinishedIssueAvailable() {
+		return getUnfinishedIssue().size() != 0;
 	}
 
 	public int getProjectProgress() {
@@ -185,8 +206,9 @@ public class Project {
 			totalPriorityAllIssue += issue.getPriority();
 		}
 
-		return (int) Math.floor(totalPriorityDoneIssue / totalPriorityAllIssue
-				* 100);
+		int result = (int) Math.floor(totalPriorityDoneIssue * 100
+				/ totalPriorityAllIssue);
+		return result;
 	}
 
 	public void addEmployeeToProject(ArrayList<Employee> employees) throws Exception {

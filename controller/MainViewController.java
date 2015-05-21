@@ -157,9 +157,11 @@ public class MainViewController {
 								@Override
 								public void actionPerformed(ActionEvent e) {
 									currentIssue.setStatus(ISSUE_STATUS.CLOSED);
+									currentIssue.setUnread(false);
 									Project currentProject = DatabaseHelper.getProjectFromPjId(currentIssue.getIncludedProject().getId());
 									currentProject.editIssue(currentIssue);
 									JOptionPane.showMessageDialog(null, "Issue solved, now being closed.");
+									listIssue.refreshTable(currentEmployee, true);
 									issueDetail.dispose();
 								}
 							});
