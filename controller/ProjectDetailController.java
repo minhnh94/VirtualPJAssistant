@@ -32,17 +32,28 @@ public class ProjectDetailController {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				currentProject.setStatus(PJ_STATUS.FINISHED);
+				if (currentProject.getStatus() == PJ_STATUS.ONGOING) {
+					currentProject.setStatus(PJ_STATUS.FINISHED);
 
-				// Get current datetime
-				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-				String closeDay = dateFormat.format(new Date());
-				currentProject.setCloseDay(closeDay);
+					// Get current datetime
+					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+					String closeDay = dateFormat.format(new Date());
+					currentProject.setCloseDay(closeDay);
 
-				DatabaseHelper.updateProjectInfo(currentProject);
-				JOptionPane.showMessageDialog(null, "Project closed!");
-				delegate.setListOfProject(currentEmployee.getOngoingProjects(), currentEmployee.getFinishedProjects());
-				projectDetailView.dispose();
+					DatabaseHelper.updateProjectInfo(currentProject);
+					JOptionPane.showMessageDialog(null, "Project closed!");
+					delegate.setListOfProject(currentEmployee.getOngoingProjects(), currentEmployee.getFinishedProjects());
+					projectDetailView.dispose();
+				} else {
+					currentProject.setStatus(PJ_STATUS.ONGOING);
+
+					currentProject.setCloseDay("");
+
+					DatabaseHelper.updateProjectInfo(currentProject);
+					JOptionPane.showMessageDialog(null, "Project reopened!");
+					delegate.setListOfProject(currentEmployee.getOngoingProjects(), currentEmployee.getFinishedProjects());
+					projectDetailView.dispose();
+				}
 			}
 		});
 
