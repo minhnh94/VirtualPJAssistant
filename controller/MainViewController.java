@@ -25,21 +25,21 @@ public class MainViewController {
 							new CreateNewProjectController(currentEmployee, mainView);
 						} else {
 							if (mainView.getSelectedProjectIndex() - 1 < currentEmployee.getOngoingProjects().size()) {
-								new ProjectDetailController(currentEmployee, currentEmployee.getOngoingProjects().get(mainView.getSelectedProjectIndex() - 1));
+								new ProjectDetailController(currentEmployee, currentEmployee.getOngoingProjects().get(mainView.getSelectedProjectIndex() - 1), mainView);
 							} else {
 								new ProjectDetailController(currentEmployee, currentEmployee.getFinishedProjects().get(mainView.getSelectedProjectIndex()
 										- 1
-										- currentEmployee.getOngoingProjects().size()));
+										- currentEmployee.getOngoingProjects().size()), mainView);
 							}
 						}
 					} else {
 						// TODO: Dont allow anyone other than manager to edit
 						// the PJ description
 						if (mainView.getSelectedProjectIndex() < currentEmployee.getOngoingProjects().size()) {
-							new ProjectDetailController(currentEmployee, currentEmployee.getOngoingProjects().get(mainView.getSelectedProjectIndex()));
+							new ProjectDetailController(currentEmployee, currentEmployee.getOngoingProjects().get(mainView.getSelectedProjectIndex()), mainView);
 						} else {
 							new ProjectDetailController(currentEmployee, currentEmployee.getFinishedProjects().get(mainView.getSelectedProjectIndex()
-									- currentEmployee.getOngoingProjects().size()));
+									- currentEmployee.getOngoingProjects().size()), mainView);
 						}
 					}
 				}

@@ -261,4 +261,37 @@ public class DatabaseHelper {
 
 		return arrayList;
 	}
+
+	public static void updateEmployeeInfo(Employee updatedEmployee) {
+		try {
+			Statement statement = connection.createStatement();
+			String query = "UPDATE Employee SET password='"
+					+ updatedEmployee.getPassword() + "',tel='"
+					+ updatedEmployee.getTel() + "',email='"
+					+ updatedEmployee.getEmail() + "' WHERE id = "
+					+ updatedEmployee.getId();
+			statement.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void updateProjectInfo(Project project) {
+		try {
+			Statement statement = connection.createStatement();
+			int statusInt = project.getStatus() == PJ_STATUS.ONGOING ? 0 : 1;
+			String query = "UPDATE Project SET name='" + project.getName()
+					+ "',description='" + project.getDescription()
+					+ "',status=" + statusInt + ",openday='"
+					+ project.getOpenDay() + "',closeday='"
+					+ project.getCloseDay() + "',estimated_day='"
+					+ project.getEstimateDay() + "'" + " WHERE id = "
+					+ project.getId();
+			statement.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
