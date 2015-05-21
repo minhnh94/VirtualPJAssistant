@@ -179,7 +179,7 @@ public class ProjectDetail extends JDialog {
 		gbc_closeDay.insets = new Insets(0, 0, 5, 0);
 		gbc_closeDay.fill = GridBagConstraints.HORIZONTAL;
 		gbc_closeDay.gridx = 1;
-		gbc_closeDay.gridy = 0;
+		gbc_closeDay.gridy = 3;
 		leftCenterPanel.add(closeDay, gbc_closeDay);
 
 		JPanel centerCenterPanel = new JPanel(new BorderLayout());
@@ -357,4 +357,5 @@ public class ProjectDetail extends JDialog {
 	public int getSelectedTesterList() {
 		return testJList.getSelectedIndex();
 	}
+
 }

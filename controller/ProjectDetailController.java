@@ -124,6 +124,15 @@ public class ProjectDetailController {
 			}
 		});
 
+		// Add view issue action
+		projectDetailView.addViewButtonActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+
 		projectDetailView.setVisible(true);
 	}
 }
