@@ -64,6 +64,66 @@ public class Project {
 		return arrayList;
 	}
 
+	public ArrayList<Employee> getCurrentManagers() {
+		ArrayList<Employee> arrayList = new ArrayList<Employee>();
+
+		try {
+			Statement statement = DatabaseHelper.getInstance().createStatement();
+			String query = "SELECT Employee.id FROM Employee,Employee_PJ WHERE Employee.id=Employee_PJ.E_id AND Employee.type=0 AND Employee_PJ.PJ_id = "
+					+ this.id;
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				Employee employee = DatabaseHelper.getEmployeeFromId(id);
+				arrayList.add(employee);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return arrayList;
+	}
+
+	public ArrayList<Employee> getCurrentDevs() {
+		ArrayList<Employee> arrayList = new ArrayList<Employee>();
+
+		try {
+			Statement statement = DatabaseHelper.getInstance().createStatement();
+			String query = "SELECT Employee.id FROM Employee,Employee_PJ WHERE Employee.id=Employee_PJ.E_id AND Employee.type=1 AND Employee_PJ.PJ_id = "
+					+ this.id;
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				Employee employee = DatabaseHelper.getEmployeeFromId(id);
+				arrayList.add(employee);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return arrayList;
+	}
+
+	public ArrayList<Employee> getCurrentTesters() {
+		ArrayList<Employee> arrayList = new ArrayList<Employee>();
+
+		try {
+			Statement statement = DatabaseHelper.getInstance().createStatement();
+			String query = "SELECT Employee.id FROM Employee,Employee_PJ WHERE Employee.id=Employee_PJ.E_id AND Employee.type=2 AND Employee_PJ.PJ_id = "
+					+ this.id;
+			ResultSet resultSet = statement.executeQuery(query);
+			while (resultSet.next()) {
+				int id = resultSet.getInt("id");
+				Employee employee = DatabaseHelper.getEmployeeFromId(id);
+				arrayList.add(employee);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return arrayList;
+	}
+
 	public ArrayList<Issue> getTotalIssue() {
 		ArrayList<Issue> arrayList = new ArrayList<Issue>();
 
@@ -111,6 +171,10 @@ public class Project {
 	public int getProjectProgress() {
 		int totalPriorityDoneIssue = 0;
 		int totalPriorityAllIssue = 0;
+
+		if (getTotalIssue().size() == 0) {
+			return 0;
+		}
 
 		for (Issue issue : getTotalIssue()) {
 			if (issue.getStatus() == ISSUE_STATUS.CLOSED) {

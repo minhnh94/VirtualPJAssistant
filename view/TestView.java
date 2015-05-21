@@ -20,7 +20,6 @@ public class TestView {
 		projects.add(p);
 		Issue i1 = new Issue(0003, p, "iss1", "fuck", m, e, Issue.ISSUE_STATUS.NEW, 5, true);
 		Issue i2 = new Issue(0002, p, "iss2", "fuck", m, e, Issue.ISSUE_STATUS.NEW, 5, true);
-		new MainView(m, projects).setVisible(true);
 
 	}
 

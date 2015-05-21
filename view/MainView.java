@@ -9,9 +9,8 @@ import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
-import java.util.ArrayList;
+import java.awt.event.MouseListener;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JList;
@@ -41,7 +40,7 @@ public class MainView extends JFrame {
 	
 	private boolean isManager;
 	
-	public MainView(Employee employee, ArrayList<Project> projects) {
+	public MainView(Employee employee) {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		
 		this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource(CommonString.MAINICON)));
@@ -106,10 +105,10 @@ public class MainView extends JFrame {
 		projectPane.getViewport().setOpaque(false);
 		
 		addButton = new ImageButton(CommonString.ADDBTT, CommonString.ADDBTTH);
-		//addButton.setOpaque(false);
+		addButton.setOpaque(false);
 		
-//		setListOfProject(employee.getOngoingProjects(), employee.getFinishedProjects());
-		setListOfTestProject();
+		setListOfProject(employee.getOngoingProjects(), employee.getFinishedProjects());
+//		setListOfTestProject();
 
 	}
 	
@@ -159,7 +158,7 @@ public class MainView extends JFrame {
 	
 	private JPanel getProjectPanel(Project project) {
 		JPanel projectPanel = new JPanel();
-		projectPanel.setPreferredSize(new Dimension(150, 220));
+		projectPanel.setPreferredSize(new Dimension(275, 100));
 		projectPanel.setOpaque(false);
 		projectPanel.setLayout(null);
 
@@ -227,69 +226,69 @@ public class MainView extends JFrame {
 		}
 	}
 	
-	private JPanel getTestProjectPanel(int stt, String name, int vl, int unread){
-		JPanel projectPanel = new JPanel();
-		projectPanel.setPreferredSize(new Dimension(275, 100));
-		projectPanel.setOpaque(false);
-		projectPanel.setLayout(null);
-		
-		int projectStatus = stt;
-		
-		if(stt==1){
-			JLabel unreadLabel = new JLabel(unread + "", JLabel.CENTER);
-			unreadLabel.setForeground(Theme.getColor(0));
-			unreadLabel.setBounds(10, 10, 35, 35);
-			unreadLabel.setOpaque(false);
-			unreadLabel.setFont(Theme.SMALLER_FONT);
-			projectPanel.add(unreadLabel);
-			
-			ImageLabel unreadImage = new ImageLabel(CommonString.UNREADBADGE, 35, 35);
-			unreadImage.setBounds(10, 10, 35, 35);
-			unreadImage.setOpaque(false);
-			projectPanel.add(unreadImage);
-		}
-		
-		ImageLabel folderLabel = new ImageLabel(CommonString.FOLDERICON2[projectStatus], 100, 81);
-		folderLabel.setBounds(20, 10, 100, 81);
-		projectPanel.add(folderLabel);
-		
-		JLabel progressLabel = new JLabel(name, JLabel.CENTER);
-		progressLabel.setBounds(120, 15, 150, 30);
-		progressLabel.setOpaque(false);
-		progressLabel.setFont(Theme.SMALLER_FONT);
-		progressLabel.setForeground(Theme.getColor(0));
-		projectPanel.add(progressLabel);
-		
-		int value = vl;
-		
-		JProgressBar progressBar = getProgressBar(value);
-		progressBar.setBounds(120, 50, 150, 20);
-		projectPanel.add(progressBar);
-		
-		return projectPanel;
-	}
-	
-	public void setListOfTestProject() {
-		projectListModel.clear();
-		projectRenderer = new PanelListCellRenderer();
-		projectList.setCellRenderer(projectRenderer);
-		Random ran = new Random();
-		
-		for (int i = 0; i < 100; i++) {
-			int stt = ran.nextInt(3);
-			int vl = ran.nextInt(101);
-			int un = ran.nextInt(5);
-			projectListModel.addElement(getTestProjectPanel(stt, "Project " + i, vl, un));
-		}
-
-		if(isManager){
-			addButton.setBounds(0, 10, 270, 100);
-			JPanel addPanel = new JPanel();
-			addPanel.setOpaque(false);
-			addPanel.add(addButton);
-			projectListModel.addElement(addPanel);
-		}
-	}
+//	private JPanel getTestProjectPanel(int stt, String name, int vl, int unread){
+//		JPanel projectPanel = new JPanel();
+//		projectPanel.setPreferredSize(new Dimension(275, 100));
+//		projectPanel.setOpaque(false);
+//		projectPanel.setLayout(null);
+//		
+//		int projectStatus = stt;
+//		
+//		if(stt==1){
+//			JLabel unreadLabel = new JLabel(unread + "", JLabel.CENTER);
+//			unreadLabel.setForeground(Theme.getColor(0));
+//			unreadLabel.setBounds(10, 10, 35, 35);
+//			unreadLabel.setOpaque(false);
+//			unreadLabel.setFont(Theme.SMALLER_FONT);
+//			projectPanel.add(unreadLabel);
+//			
+//			ImageLabel unreadImage = new ImageLabel(CommonString.UNREADBADGE, 35, 35);
+//			unreadImage.setBounds(10, 10, 35, 35);
+//			unreadImage.setOpaque(false);
+//			projectPanel.add(unreadImage);
+//		}
+//		
+//		ImageLabel folderLabel = new ImageLabel(CommonString.FOLDERICON2[projectStatus], 100, 81);
+//		folderLabel.setBounds(20, 10, 100, 81);
+//		projectPanel.add(folderLabel);
+//		
+//		JLabel progressLabel = new JLabel(name, JLabel.CENTER);
+//		progressLabel.setBounds(120, 15, 150, 30);
+//		progressLabel.setOpaque(false);
+//		progressLabel.setFont(Theme.SMALLER_FONT);
+//		progressLabel.setForeground(Theme.getColor(0));
+//		projectPanel.add(progressLabel);
+//		
+//		int value = vl;
+//		
+//		JProgressBar progressBar = getProgressBar(value);
+//		progressBar.setBounds(120, 50, 150, 20);
+//		projectPanel.add(progressBar);
+//		
+//		return projectPanel;
+//	}
+//	
+//	private void setListOfTestProject() {
+//		projectListModel.clear();
+//		projectRenderer = new PanelListCellRenderer();
+//		projectList.setCellRenderer(projectRenderer);
+//		Random ran = new Random();
+//		
+//		for (int i = 0; i < 100; i++) {
+//			int stt = ran.nextInt(3);
+//			int vl = ran.nextInt(101);
+//			int un = ran.nextInt(5);
+//			projectListModel.addElement(getTestProjectPanel(stt, "Project " + i, vl, un));
+//		}
+//
+//		if(isManager){
+//			addButton.setBounds(0, 10, 270, 100);
+//			JPanel addPanel = new JPanel();
+//			addPanel.setOpaque(false);
+//			addPanel.add(addButton);
+//			projectListModel.addElement(addPanel);
+//		}
+//	}
 	
 	class PanelListCellRenderer implements ListCellRenderer<JPanel> {
 
@@ -315,5 +314,13 @@ public class MainView extends JFrame {
 	
 	public void setNotiLabelMouseAdapter(MouseAdapter adapter){
 		notiLabel.addMouseListener(adapter);
+	}
+	
+	public int getSelectedProjectIndex(){
+		return projectList.getSelectedIndex();
+	}
+	
+	public void addProjectListMouseListener(MouseListener listener){
+		projectList.addMouseListener(listener);
 	}
 }

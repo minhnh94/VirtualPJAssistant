@@ -2,11 +2,6 @@ package view;
 
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.Image;
-import java.awt.image.BufferedImage;
-
-import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
 
 public class Theme {
 
@@ -19,8 +14,9 @@ public class Theme {
 		new Color(Integer.parseInt("CCFF00", 16)), new Color(Integer.parseInt("99FF00", 16)),	new Color(Integer.parseInt("66FF00", 16)),
 		new Color(Integer.parseInt("33FF00", 16)), new Color(Integer.parseInt("00FF00", 16))};
 	
-	public static final Font BIGGER_FONT = new Font(Font.SERIF, Font.BOLD, 30);
-	public static final Font SMALLER_FONT = new Font(Font.SERIF, Font.PLAIN, 20);
+	public static final Font BIGGER_FONT = new Font(Font.DIALOG, Font.BOLD, 30);
+	public static final Font SMALLER_FONT = new Font(Font.DIALOG, Font.PLAIN, 18);
+	public static final Font EXTRA_SMALLER_FONT = new Font(Font.DIALOG, Font.PLAIN, 14);
 	
 //	public static final BufferedImage MAIN_ICON = ImageIO.read(getClass().getResource(CommonString.MAINICON));
 	

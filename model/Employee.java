@@ -36,11 +36,11 @@ public class Employee {
 
 		try {
 			Statement statement = DatabaseHelper.getInstance().createStatement();
-			String query = "SELECT Project.id"
-					+ "FROM Project, Employee_PJ"
+			String query = "SELECT Project.id "
+					+ "FROM Project, Employee_PJ "
 					+ "WHERE Employee_PJ.E_id = "
 					+ this.id
-					+ "AND Employee_PJ.PJ_id = Project.id AND Project.status = 1";
+					+ " AND Employee_PJ.PJ_id = Project.id AND Project.status = 1";
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				int id = resultSet.getInt("id");
@@ -61,11 +61,12 @@ public class Employee {
 
 		try {
 			Statement statement = DatabaseHelper.getInstance().createStatement();
-			String query = "SELECT Project.id"
-					+ "FROM Project, Employee_PJ"
+			String query = "SELECT Project.id "
+					+ "FROM Project, Employee_PJ "
 					+ "WHERE Employee_PJ.E_id = "
 					+ this.getId()
-					+ "AND Employee_PJ.PJ_id = Project.id AND Project.status = 0";
+					+ " AND Employee_PJ.PJ_id = Project.id AND Project.status = 0";
+			System.out.println(query);
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				int id = resultSet.getInt("id");
@@ -109,9 +110,9 @@ public class Employee {
 
 		try {
 			Statement statement = DatabaseHelper.getInstance().createStatement();
-			String query = "SELECT Issue.id"
-					+ "FROM Issue, Employee WHERE Issue.assigned_id = "
-					+ this.getId() + " AND Issue.is_unread = 1";
+			String query = "SELECT `Issue`.`id`"
+					+ "FROM `Issue`, `Employee` WHERE `Issue`.`assigned_id` = "
+					+ this.getId() + " AND `Issue`.`is_unread` = 1";
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				int id = resultSet.getInt("id");

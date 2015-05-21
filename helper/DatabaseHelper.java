@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import model.Developer;
 import model.Employee;
 import model.Issue;
+import model.LoginException;
 import model.Manager;
 import model.Project;
 import model.Issue.ISSUE_STATUS;
@@ -35,6 +36,59 @@ public class DatabaseHelper {
 
 	public static Connection getInstance() {
 		return connection;
+	}
+
+	public static Employee loginEmployee(String username, String password) throws LoginException {
+		Employee result = null;
+
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT * FROM Employee WHERE name = '" + username
+					+ "'";
+			ResultSet resultSet = statement.executeQuery(query);
+			boolean isNotNull = resultSet.next();
+			if (!isNotNull) {
+				throw new LoginException("This username doesn't exist.");
+			} else {
+				String passwordGot = resultSet.getString("password");
+				if (passwordGot.equals(password)) {
+					result = getEmployeeFromId(resultSet.getInt("id"));
+				} else {
+					throw new LoginException("Wrong password");
+				}
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	public static boolean registerEmployee(String name, String password, String tel, String email, int type) {
+		try {
+			Statement statement = connection.createStatement();
+			String queryCheckExistUser = "SELECT * FROM Employee WHERE name = '"
+					+ name + "'";
+			boolean isNotNull = statement.executeQuery(queryCheckExistUser).next();
+			if (isNotNull) {
+				return false;
+			}
+
+			String queryCreateUser = "INSERT INTO Employee (name,password,tel,email,type)"
+					+ "VALUES ('"
+					+ name
+					+ "','"
+					+ password
+					+ "','"
+					+ tel
+					+ "','" + email + "'," + type + ")";
+			statement.executeUpdate(queryCreateUser);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return true;
 	}
 
 	public static Project getProjectFromPjId(int pjId) {
