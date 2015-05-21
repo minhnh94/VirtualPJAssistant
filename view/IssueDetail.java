@@ -29,7 +29,7 @@ public class IssueDetail extends JDialog {
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		
 		this.setResizable(false);
-		this.setTitle(CommonString.ISSTITLE);
+		this.setTitle(i.getName());
 		this.setBounds((dim.width-600)/2, 10, 600, 410);
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		

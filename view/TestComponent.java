@@ -22,6 +22,11 @@ public class TestComponent {
 		new Register().setVisible(true);
 		new IssueDetail(i1, e).setVisible(true);
 		new NewIssue(p).setVisible(true);
+		new ProjectDetail(p, false).setVisible(true);
+		new AddEmployee(false).setVisible(true);
+		new NewProject().setVisible(true);
+		new UserDetail(e, true).setVisible(true);
+		new EditUserProfile(e).setVisible(true);
 	}
 
 }

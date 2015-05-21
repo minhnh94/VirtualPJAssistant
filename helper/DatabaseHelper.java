@@ -187,6 +187,24 @@ public class DatabaseHelper {
 		return employee;
 	}
 
+	public static int getLastRowIdFromTable(String tableName) {
+		int result = 0;
+
+		try {
+			Statement statement = connection.createStatement();
+			String query = "SELECT id FROM " + tableName
+					+ " ORDER BY id DESC LIMIT 1";
+			ResultSet resultSet = statement.executeQuery(query);
+			resultSet.next();
+			result = resultSet.getInt("id");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
 	public static ArrayList<Manager> getAllManagersFromDatabase() {
 		ArrayList<Manager> arrayList = new ArrayList<Manager>();
 

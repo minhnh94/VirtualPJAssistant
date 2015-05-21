@@ -1,6 +1,10 @@
 package controller;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import model.Employee;
+import model.Manager;
 import view.MainView;
 
 public class MainViewController {
@@ -11,6 +15,36 @@ public class MainViewController {
 		setCurrentEmployee(employee);
 
 		mainView = new MainView(employee);
+		mainView.addProjectListMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					System.out.println(mainView.getSelectedProjectIndex());
+					if (currentEmployee instanceof Manager) {
+						if (mainView.getSelectedProjectIndex() == 0) {
+							new CreateNewProjectController(currentEmployee, mainView);
+						} else {
+							if (mainView.getSelectedProjectIndex() - 1 < currentEmployee.getOngoingProjects().size()) {
+								new ProjectDetailController(currentEmployee, currentEmployee.getOngoingProjects().get(mainView.getSelectedProjectIndex() - 1));
+							} else {
+								new ProjectDetailController(currentEmployee, currentEmployee.getFinishedProjects().get(mainView.getSelectedProjectIndex()
+										- 1
+										- currentEmployee.getOngoingProjects().size()));
+							}
+						}
+					} else {
+						// TODO: Dont allow anyone other than manager to edit
+						// the PJ description
+						if (mainView.getSelectedProjectIndex() < currentEmployee.getOngoingProjects().size()) {
+							new ProjectDetailController(currentEmployee, currentEmployee.getOngoingProjects().get(mainView.getSelectedProjectIndex()));
+						} else {
+							new ProjectDetailController(currentEmployee, currentEmployee.getFinishedProjects().get(mainView.getSelectedProjectIndex()
+									- currentEmployee.getOngoingProjects().size()));
+						}
+					}
+				}
+			}
+		});
 		mainView.setVisible(true);
 	}
 

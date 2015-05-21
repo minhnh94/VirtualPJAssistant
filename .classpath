@@ -3,5 +3,6 @@
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="lib" path="sqlite-jdbc-3.8.7.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="microba-0.4.4.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

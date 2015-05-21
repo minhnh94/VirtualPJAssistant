@@ -6,9 +6,9 @@ import java.awt.Font;
 public class Theme {
 
 	private static Color[] palette = {Color.WHITE, new Color(Integer.parseInt("1A1A1A", 16)),
-		new Color(Integer.parseInt("1F93FF", 16)), new Color(Integer.parseInt("E23220", 16)),
-		new Color(Integer.parseInt("FFD61F", 16))};
-	
+		new Color(Integer.parseInt("1F93FF", 16)), new Color(Integer.parseInt("FF8A80", 16)),
+		new Color(Integer.parseInt("F4FF81", 16))};
+
 	private static Color[] progressBar = {new Color(Integer.parseInt("FF0000", 16)), new Color(Integer.parseInt("FF1C00", 16)),
 		new Color(Integer.parseInt("FF3900", 16)), new Color(Integer.parseInt("FF9C00", 16)), new Color(Integer.parseInt("FFFF00", 16)),
 		new Color(Integer.parseInt("CCFF00", 16)), new Color(Integer.parseInt("99FF00", 16)),	new Color(Integer.parseInt("66FF00", 16)),

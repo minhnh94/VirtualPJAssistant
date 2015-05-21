@@ -66,7 +66,6 @@ public class Employee {
 					+ "WHERE Employee_PJ.E_id = "
 					+ this.getId()
 					+ " AND Employee_PJ.PJ_id = Project.id AND Project.status = 0";
-			System.out.println(query);
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				int id = resultSet.getInt("id");

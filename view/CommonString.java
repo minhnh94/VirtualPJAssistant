@@ -75,4 +75,41 @@ public class CommonString {
 	public static final String NOIDUNG = "N\u1ED9i dung";
 	public static final String CREATEISS = "img/createiss.png";
 	public static final String CREATEISSH = "img/createissh.png";
+	
+	public static final String CREATENEWPROJECT = "T\u1EA1o Project m\u1EDBi";
+	public static final String COLORFULFOLDER = "img/4.png";
+	public static final String CLOSEPJ = "img/closepj.png";
+	public static final String CLOSEPJH = "img/closepjh.png";
+	public static final String REOPENPJ = "img/reopenpj.png";
+	public static final String REOPENPJH = "img/reopenpjh.png";
+	public static final String VIEWISSLIST = "img/viewisslist.png";
+	public static final String VIEWISSLISTH = "img/viewisslisth.png";
+	public static final String CREATEPJ = "img/createpj.png";
+	public static final String CREATEPJH = "img/createpjh.png";
+	public static final String OPENAT = "M\u1EDF v\u00E0o";
+	public static final String ESTIMATEAT = "D\u1EF1 ki\u1EBFn \u0111\u00F3ng";
+	public static final String CLOSEAT = "\u0110\u00F3ng v\u00E0o";
+	
+	public static final String ADDDEV = "img/adddev.png";
+	public static final String ADDDEVH = "img/adddevh.png";
+	public static final String ADDTEST = "img/addtester.png";
+	public static final String ADDTESTH = "img/addtesterh.png";
+	
+	public static final String ADDEMPLOYEE = "Th\u00EAm ng\u01B0\u1EDDi v\u00E0o Project";
+	public static final String ADD = "Th\u00EAm";
+	public static final String CONFIRM = "img/confirm.png";
+	public static final String CONFIRMH = "img/confirmh.png";
+	public static final String CREATE_PROJECT = "T\u1EA1o Project m\u1EDBi";
+	public static final String MOTA = "M\u00F4 t\u1EA3";
+	public static final String NEWPJ_TITLE = "T\u1EA1o Project m\u1EDBi";
+	
+	public static final String[] EMICON = {"img/e0.png", "img/e1.png", "img/e2.png"};
+	public static final String EDITPR5 = "img/editpr5.png";
+	public static final String EDITPR5H = "img/editpr5h.png";
+	public static final String JOB = "Ch\u1EE9c v\u1EE5";
+	public static final String TEL = "\u0110i\u1EC7n tho\u1EA1i";
+	public static final String USERNAME = "T\u00EAn ng\u01B0\u1EDDi d\u00F9ng";
+	public static final String PASSWORD = "Password";
+	public static final String REPASSWORD = "G\u00F5 l\u1EA1i Password";
+	
 }

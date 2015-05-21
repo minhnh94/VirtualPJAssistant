@@ -10,6 +10,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import model.Developer;
@@ -25,6 +26,7 @@ public class NewIssue extends JDialog{
 
 	private static final long serialVersionUID = 1L;
 	
+	private JTextField issueNameTextField;
 	private JComboBox<String> listOfDev;
 	private JComboBox<String> listOfTest;
 	private JComboBox<String> listOfPriority;
@@ -35,7 +37,7 @@ public class NewIssue extends JDialog{
 		Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
 		
 		this.setResizable(false);
-		this.setTitle(CommonString.ISSTITLE);
+		this.setTitle(CommonString.CREATENEWISSUE);
 		this.setBounds((dim.width-600)/2, 10, 600, 510);
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		
@@ -92,6 +94,28 @@ public class NewIssue extends JDialog{
 		gbc_projectName.gridy = 0;
 		centerPanel.add(projectName, gbc_projectName);
 		
+		JLabel issNewName = new JLabel(ObjectPropertyString.TEN + " Issue:");
+		issNewName.setForeground(Theme.getColor(1));
+		issNewName.setFont(Theme.SMALLER_FONT);
+		issNewName.setPreferredSize(new Dimension(380,30));
+		GridBagConstraints gbc_issNewName = new GridBagConstraints();
+		gbc_issNewName.insets = new Insets(0, 0, 5, 0);
+		gbc_issNewName.fill = GridBagConstraints.EAST;
+		gbc_issNewName.gridx = 0;
+		gbc_issNewName.gridy = 1;
+		centerPanel.add(issNewName, gbc_issNewName);
+		
+		issueNameTextField = new JTextField();
+		issueNameTextField.setForeground(Theme.getColor(1));
+		issueNameTextField.setFont(Theme.SMALLER_FONT);
+		issueNameTextField.setPreferredSize(new Dimension(380,30));
+		GridBagConstraints gbc_issueNameTextField = new GridBagConstraints();
+		gbc_issueNameTextField.insets = new Insets(0, 0, 5, 0);
+		gbc_issueNameTextField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_issueNameTextField.gridx = 1;
+		gbc_issueNameTextField.gridy = 1;
+		centerPanel.add(issueNameTextField, gbc_issueNameTextField);
+		
 		JLabel devNameLabel = new JLabel(ObjectPropertyString.DEV + ": ", JLabel.RIGHT);
 		devNameLabel.setForeground(Theme.getColor(1));
 		devNameLabel.setFont(Theme.SMALLER_FONT);
@@ -100,7 +124,7 @@ public class NewIssue extends JDialog{
 		gbc_devNameLabel.anchor = GridBagConstraints.EAST;
 		gbc_devNameLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_devNameLabel.gridx = 0;
-		gbc_devNameLabel.gridy = 1;
+		gbc_devNameLabel.gridy = 2;
 		centerPanel.add(devNameLabel, gbc_devNameLabel);
 		
 		listOfDev = new JComboBox<String>();
@@ -111,7 +135,7 @@ public class NewIssue extends JDialog{
 		gbc_listOfDev.insets = new Insets(0, 0, 5, 0);
 		gbc_listOfDev.fill = GridBagConstraints.HORIZONTAL;
 		gbc_listOfDev.gridx = 1;
-		gbc_listOfDev.gridy = 1;
+		gbc_listOfDev.gridy = 2;
 		centerPanel.add(listOfDev, gbc_listOfDev);
 		
 		JLabel testNameLabel = new JLabel(ObjectPropertyString.TEST + ": ", JLabel.RIGHT);
@@ -122,7 +146,7 @@ public class NewIssue extends JDialog{
 		gbc_testNameLabel.insets = new Insets(0, 0, 5, 5);
 		gbc_testNameLabel.anchor = GridBagConstraints.EAST;
 		gbc_testNameLabel.gridx = 0;
-		gbc_testNameLabel.gridy = 2;
+		gbc_testNameLabel.gridy = 3;
 		centerPanel.add(testNameLabel, gbc_testNameLabel);
 		
 		listOfTest = new JComboBox<String>();
@@ -133,33 +157,8 @@ public class NewIssue extends JDialog{
 		gbc_listOfTest.insets = new Insets(0, 0, 5, 0);
 		gbc_listOfTest.fill = GridBagConstraints.HORIZONTAL;
 		gbc_listOfTest.gridx = 1;
-		gbc_listOfTest.gridy = 2;
+		gbc_listOfTest.gridy = 3;
 		centerPanel.add(listOfTest, gbc_listOfTest);
-		
-		JLabel priorityLabel = new JLabel(ObjectPropertyString.PRIORITY + ": ", JLabel.RIGHT);
-		priorityLabel.setForeground(Theme.getColor(1));
-		priorityLabel.setFont(Theme.SMALLER_FONT);
-		priorityLabel.setPreferredSize(new Dimension(200,30));
-		GridBagConstraints gbc_priorityLabel = new GridBagConstraints();
-		gbc_priorityLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_priorityLabel.anchor = GridBagConstraints.EAST;
-		gbc_priorityLabel.gridx = 0;
-		gbc_priorityLabel.gridy = 3;
-		centerPanel.add(priorityLabel, gbc_priorityLabel);
-		
-		listOfPriority = new JComboBox<String>();
-		for(int i=1;i<=10;i++){
-			listOfPriority.addItem(i + "");
-		}
-		listOfPriority.setForeground(Theme.getColor(1));
-		listOfPriority.setFont(Theme.SMALLER_FONT);
-		listOfPriority.setPreferredSize(new Dimension(380,30));
-		GridBagConstraints gbc_listOfPriority = new GridBagConstraints();
-		gbc_listOfPriority.insets = new Insets(0, 0, 5, 0);
-		gbc_listOfPriority.fill = GridBagConstraints.HORIZONTAL;
-		gbc_listOfPriority.gridx = 1;
-		gbc_listOfPriority.gridy = 3;
-		centerPanel.add(listOfPriority, gbc_listOfPriority);
 		
 		JLabel messageLabel = new JLabel(CommonString.NOIDUNG + ": ", JLabel.RIGHT);
 		messageLabel.setForeground(Theme.getColor(1));
@@ -174,7 +173,7 @@ public class NewIssue extends JDialog{
 		
 		messageTextArea = new JTextArea();
 		messageTextArea.setForeground(Theme.getColor(1));
-		messageTextArea.setFont(Theme.SMALLER_FONT);
+		messageTextArea.setFont(Theme.EXTRA_SMALLER_FONT);
 		messageTextArea.setLineWrap(true);
 		messageTextArea.setWrapStyleWord(true);
 //		messageTextArea.setPreferredSize(new Dimension(300,100));
@@ -184,6 +183,31 @@ public class NewIssue extends JDialog{
 		gbc_messageTextArea.gridx = 1;
 		gbc_messageTextArea.gridy = 4;
 		centerPanel.add(messageTextArea, gbc_messageTextArea);
+		
+		JLabel priorityLabel = new JLabel(ObjectPropertyString.PRIORITY + ": ", JLabel.RIGHT);
+		priorityLabel.setForeground(Theme.getColor(1));
+		priorityLabel.setFont(Theme.SMALLER_FONT);
+		priorityLabel.setPreferredSize(new Dimension(200,30));
+		GridBagConstraints gbc_priorityLabel = new GridBagConstraints();
+		gbc_priorityLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_priorityLabel.anchor = GridBagConstraints.EAST;
+		gbc_priorityLabel.gridx = 0;
+		gbc_priorityLabel.gridy = 5;
+		centerPanel.add(priorityLabel, gbc_priorityLabel);
+		
+		listOfPriority = new JComboBox<String>();
+		for(int i=1;i<=10;i++){
+			listOfPriority.addItem(i + "");
+		}
+		listOfPriority.setForeground(Theme.getColor(1));
+		listOfPriority.setFont(Theme.SMALLER_FONT);
+		listOfPriority.setPreferredSize(new Dimension(380,30));
+		GridBagConstraints gbc_listOfPriority = new GridBagConstraints();
+		gbc_listOfPriority.insets = new Insets(0, 0, 5, 0);
+		gbc_listOfPriority.fill = GridBagConstraints.HORIZONTAL;
+		gbc_listOfPriority.gridx = 1;
+		gbc_listOfPriority.gridy = 5;
+		centerPanel.add(listOfPriority, gbc_listOfPriority);
 		
 	}
 	
@@ -217,6 +241,10 @@ public class NewIssue extends JDialog{
 	
 	public String getMessage(){
 		return messageTextArea.getText();
+	}
+	
+	public String getIssueName(){
+		return issueNameTextField.getText();
 	}
 
 }
