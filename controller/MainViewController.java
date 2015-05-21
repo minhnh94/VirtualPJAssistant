@@ -1,12 +1,21 @@
 package controller;
 
+import helper.DatabaseHelper;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.JOptionPane;
+
+import model.Developer;
 import model.Employee;
+import model.Issue;
 import model.Manager;
+import model.Issue.ISSUE_STATUS;
+import model.Project;
+import view.IssueDetail;
 import view.ListIssue;
 import view.MainView;
 
@@ -63,7 +72,89 @@ public class MainViewController {
 		mainView.setNotiLabelMouseAdapter(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new ListIssue(currentEmployee, true).setVisible(true);
+				ListIssue listIssue = new ListIssue(currentEmployee, true);
+
+				listIssue.addViewButtonActionListerner(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						IssueDetail issueDetail = new IssueDetail(listIssue.getSelectedIssue(), currentEmployee);
+
+						Issue currentIssue = listIssue.getSelectedIssue();
+
+						String currentMessage = issueDetail.getMessage();
+
+						// Reload button action
+						issueDetail.addReloadButtonActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								issueDetail.setMessage(currentMessage);
+							}
+						});
+
+						// Save message to db
+						issueDetail.addSaveButtonActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// Protect user from editing others' issue
+								if (currentIssue.getAssignee().getId() != currentEmployee.getId()
+										&& currentIssue.getReporter().getId() != currentEmployee.getId()
+										&& !(currentEmployee instanceof Manager)) {
+									JOptionPane.showMessageDialog(null, "You are not allowed to edit issues that's not yours.");
+									return;
+								}
+								currentIssue.setDescription(issueDetail.getMessage());
+								currentIssue.setUnread(true);
+
+								Project currentProject = DatabaseHelper.getProjectFromPjId(currentIssue.getIncludedProject().getId());
+								currentProject.editIssue(currentIssue);
+
+								JOptionPane.showMessageDialog(null, "Message saved to database.");
+							}
+						});
+
+						// Send button action
+						issueDetail.addSendButtonActionListener(new ActionListener() {
+
+							@Override
+							public void actionPerformed(ActionEvent e) {
+								// Protect user from editing others' issue
+								if (currentIssue.getAssignee().getId() != currentEmployee.getId()
+										&& currentIssue.getReporter().getId() != currentEmployee.getId()
+										&& !(currentEmployee instanceof Manager)) {
+									JOptionPane.showMessageDialog(null, "You are not allowed to edit issues that's not yours.");
+									return;
+								}
+								currentIssue.setDescription(issueDetail.getMessage());
+								currentIssue.setUnread(true);
+
+								if (currentEmployee instanceof Developer) {
+									currentIssue.setStatus(ISSUE_STATUS.CHECKING);
+								} else {
+									currentIssue.setStatus(ISSUE_STATUS.NEW);
+								}
+
+								if (currentEmployee.getId() == currentIssue.getAssignee().getId()) {
+									Employee temp = currentIssue.getAssignee();
+									currentIssue.setAssignee(currentIssue.getReporter());
+									currentIssue.setReporter(temp);
+								}
+
+								Project currentProject = DatabaseHelper.getProjectFromPjId(currentIssue.getIncludedProject().getId());
+								currentProject.editIssue(currentIssue);
+								JOptionPane.showMessageDialog(null, "Sent successfully");
+								listIssue.refreshTable(currentProject);
+								issueDetail.dispose();
+							}
+						});
+
+						issueDetail.setVisible(true);
+					}
+				});
+
+				listIssue.setVisible(true);
 			}
 		});
 	}

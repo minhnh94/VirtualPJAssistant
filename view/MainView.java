@@ -113,6 +113,9 @@ public class MainView extends JFrame {
 			@Override
 			public void windowActivated(WindowEvent e) {
 				setListOfProject(employee.getOngoingProjects(), employee.getFinishedProjects());
+				notiLabel.setText(CommonString.BANCO + " "
+						+ employee.getNewAssignedIssueAsNotification().size()
+						+ " " + CommonString.THONGBAOMOI);
 			}
 		});
 
