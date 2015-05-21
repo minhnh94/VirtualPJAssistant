@@ -350,4 +350,11 @@ public class ProjectDetail extends JDialog {
 		testJList.addMouseListener(listener);
 	}
 
+	public int getSelectedDevList() {
+		return devJList.getSelectedIndex();
+	}
+
+	public int getSelectedTesterList() {
+		return testJList.getSelectedIndex();
+	}
 }

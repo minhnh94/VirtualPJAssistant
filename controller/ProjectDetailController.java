@@ -4,18 +4,23 @@ import helper.DatabaseHelper;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JOptionPane;
 
 import view.MainView;
 import view.ProjectDetail;
+import model.Developer;
 import model.Employee;
 import model.Manager;
 import model.Project;
 import model.Project.PJ_STATUS;
+import model.Tester;
 
 public class ProjectDetailController {
 	private Employee currentEmployee;
@@ -85,8 +90,40 @@ public class ProjectDetailController {
 			}
 		});
 
-		// TODO: syso here
-		System.out.println(currentProject.getCloseDay());
+		// Delete test and dev by double clicking
+		projectDetailView.addDevListMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					Developer selectedDev = (Developer) currentProject.getCurrentDevs().get(projectDetailView.getSelectedDevList());
+					int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove developer \""
+							+ selectedDev.getName() + "\" from project?");
+					if (selectedOption == 0) {
+						ArrayList<Employee> arrayList = new ArrayList<Employee>();
+						arrayList.add(selectedDev);
+						currentProject.removeEmployeeFromProject(arrayList);
+						projectDetailView.setListOfDev(currentProject.getCurrentDevs());
+					}
+				}
+			}
+		});
+		projectDetailView.addTestListMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 2) {
+					Tester selectedTester = (Tester) currentProject.getCurrentTesters().get(projectDetailView.getSelectedTesterList());
+					int selectedOption = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove tester \""
+							+ selectedTester.getName() + "\" from project?");
+					if (selectedOption == 0) {
+						ArrayList<Employee> arrayList = new ArrayList<Employee>();
+						arrayList.add(selectedTester);
+						currentProject.removeEmployeeFromProject(arrayList);
+						projectDetailView.setListOfTest(currentProject.getCurrentTesters());
+					}
+				}
+			}
+		});
+
 		projectDetailView.setVisible(true);
 	}
 }
