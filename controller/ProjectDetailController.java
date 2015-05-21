@@ -46,6 +46,8 @@ public class ProjectDetailController {
 			}
 		});
 
+		// TODO: syso here
+		System.out.println(currentProject.getCloseDay());
 		projectDetailView.setVisible(true);
 	}
 }

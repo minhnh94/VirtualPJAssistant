@@ -41,6 +41,7 @@ public class Project {
 		this.setDescription(description);
 		this.setStatus(status);
 		this.setOpenDay(openDay);
+		this.setCloseDay(closeDay);
 		this.setEstimateDay(estimateDay);
 		this.setCurrentManager(currentManager);
 	}
