@@ -132,8 +132,6 @@ public class Project {
 			Statement statement = DatabaseHelper.getInstance().createStatement();
 			String query = "SELECT Issue.id FROM Issue, Project WHERE Issue.PJ_id = "
 					+ this.id + " AND Issue.PJ_id = Project.id";
-			// TODO: syso here
-			System.out.println(query);
 			ResultSet resultSet = statement.executeQuery(query);
 			while (resultSet.next()) {
 				int id = resultSet.getInt("id");

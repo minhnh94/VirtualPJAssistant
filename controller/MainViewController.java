@@ -7,6 +7,7 @@ import java.awt.event.MouseEvent;
 
 import model.Employee;
 import model.Manager;
+import view.ListIssue;
 import view.MainView;
 
 public class MainViewController {
@@ -17,6 +18,7 @@ public class MainViewController {
 		setCurrentEmployee(employee);
 
 		mainView = new MainView(employee);
+
 		mainView.addProjectListMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -47,6 +49,7 @@ public class MainViewController {
 				}
 			}
 		});
+
 		UserProfileController userProfileCtrl = new UserProfileController(employee, true);
 		mainView.setPro5ButtonActionListerner(new ActionListener() {
 
@@ -56,6 +59,13 @@ public class MainViewController {
 			}
 		});
 		mainView.setVisible(true);
+
+		mainView.setNotiLabelMouseAdapter(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new ListIssue(currentEmployee, true).setVisible(true);
+			}
+		});
 	}
 
 	public Employee getCurrentEmployee() {

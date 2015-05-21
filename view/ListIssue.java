@@ -125,6 +125,16 @@ public class ListIssue extends JDialog {
 		MainTableModel tableModel = (MainTableModel) table.getModel();
 		tableModel.setIssues(issues);
 	}
+	
+	public Issue getSelectedIssue() {
+		if(table != null) {
+			int rowSelectedIndex = table.getSelectedRow();
+			
+			MainTableModel tableModel = (MainTableModel)table.getModel();
+			return tableModel.getIssue(rowSelectedIndex);
+		}
+		return null;
+	}
 
 	class MainTableModel extends DefaultTableModel {
 
