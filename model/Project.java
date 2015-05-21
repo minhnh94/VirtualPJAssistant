@@ -189,7 +189,7 @@ public class Project {
 				* 100);
 	}
 
-	public void addEmployeeToProject(ArrayList<Employee> employees) {
+	public void addEmployeeToProject(ArrayList<Employee> employees) throws Exception {
 		try {
 			Statement statement = DatabaseHelper.getInstance().createStatement();
 			for (Employee employee : employees) {
@@ -199,7 +199,7 @@ public class Project {
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new Exception("This employee is already in the project");
 		}
 	}
 

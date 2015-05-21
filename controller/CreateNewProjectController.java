@@ -47,7 +47,11 @@ public class CreateNewProjectController {
 				ArrayList<Employee> arrayList = new ArrayList<Employee>();
 				arrayList.add(currentEmployee);
 				newProject.setId(DatabaseHelper.getLastRowIdFromTable("Project"));
-				newProject.addEmployeeToProject(arrayList);
+				try {
+					newProject.addEmployeeToProject(arrayList);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 
 				JOptionPane.showMessageDialog(null, "New project added successfully", "Add project success", JOptionPane.INFORMATION_MESSAGE);
 

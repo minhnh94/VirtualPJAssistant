@@ -57,6 +57,34 @@ public class ProjectDetailController {
 			}
 		});
 
+		// Setup add dev button action
+		projectDetailView.addAddDevButtonActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (currentProject.getStatus() == PJ_STATUS.FINISHED) {
+					JOptionPane.showMessageDialog(null, "This project was already finished. Reopen it to continue developing.");
+					return;
+				}
+
+				new AddEmployeeController(true, currentProject, projectDetailView);
+			}
+		});
+
+		// Setup add test button action
+		projectDetailView.addAddTestButtonActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (currentProject.getStatus() == PJ_STATUS.FINISHED) {
+					JOptionPane.showMessageDialog(null, "This project was already finished. Reopen it to continue developing.");
+					return;
+				}
+
+				new AddEmployeeController(false, currentProject, projectDetailView);
+			}
+		});
+
 		// TODO: syso here
 		System.out.println(currentProject.getCloseDay());
 		projectDetailView.setVisible(true);
